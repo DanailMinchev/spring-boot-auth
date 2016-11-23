@@ -1,0 +1,35 @@
+# EditorConfig is awesome: http://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Defaults
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# 2 space indentation
+[*.{html,css,js,json,yaml,yml,xml}]
+indent_style = space
+indent_size = 2
+
+# Markdown specific
+[*.md]
+trim_trailing_whitespace = false
+
+# Gradle specific
+[gradlew.bat]
+end_of_line = crlf
+
+# Ignore paths
+[{.gradle,build,.idea}/**]
+charset = none
+end_of_line = none
+insert_final_newline = none
+trim_trailing_whitespace = none
+indent_style = none
+indent_size = none

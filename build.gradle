@@ -1,0 +1,93 @@
+buildscript {
+    ext {
+        springBootVersion = "1.4.2.RELEASE"
+    }
+    repositories {
+        jcenter()
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
+        maven { url "http://repo.spring.io/plugins-release" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.build.gradle:propdeps-plugin:0.0.7")
+    }
+}
+
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "eclipse"
+apply plugin: "org.springframework.boot"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configure(allprojects) {
+    apply plugin: "propdeps"
+    apply plugin: "propdeps-maven"
+    apply plugin: "propdeps-idea"
+    apply plugin: "propdeps-eclipse"
+}
+
+jar {
+    baseName = "demo"
+    version = "0.0.1-SNAPSHOT"
+}
+
+repositories {
+    jcenter()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+}
+
+dependencies {
+    // === Developer tools
+    runtime("org.springframework.boot:spring-boot-devtools")
+
+    // === Dependencies - core
+    // Java annotation library which helps to reduce boilerplate code and code faster
+    compileOnly("org.projectlombok:lombok")
+    // Core starter, including auto-configuration support, logging and YAML
+    compile("org.springframework.boot:spring-boot-starter")
+    // Starter for using Java Bean Validation with Hibernate Validator
+    compile("org.springframework.boot:spring-boot-starter-validation")
+
+    // === Dependencies - production tools
+    // Actuator starter
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    // === Dependencies - data
+    // Data JPA starter
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    // H2 database
+    compile("com.h2database:h2")
+    // Data REST starter
+    compile("org.springframework.boot:spring-boot-starter-data-rest")
+
+    // === Dependencies - web & rest
+    // Web starter
+    compile("org.springframework.boot:spring-boot-starter-web")
+    // HATEOAS starter
+    compile("org.springframework.boot:spring-boot-starter-hateoas")
+
+    // === Dependencies - jackson
+    // Jackson - datatypes
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    // Jackson - XML dataformat support
+    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-xml")
+    compile("org.codehaus.woodstox:woodstox-core-asl:4.4.1")
+    // Jackson - MorphedResult
+    // https://github.com/Russell-Allen/jackson-morphed-result
+    compile("com.allenru:jackson-morphed-result:1.0.1")
+
+    // === Dependencies - test
+    // Starter for testing Spring Boot applications with libraries including JUnit, Hamcrest, Mockito, etc
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    // XML support - org.springframework.test.web.servlet.result.ContentResultMatchers.xml
+    testCompile("org.custommonkey.xmlunit:com.springsource.org.custommonkey.xmlunit:1.2.0")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.14.1"
+}
